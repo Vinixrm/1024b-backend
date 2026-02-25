@@ -5,7 +5,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+<<<<<<< HEAD
     "dev": "tsx watch src/index.ts",
+=======
+    "dev":"tsx src/index.ts",
+>>>>>>> fd110c5593d0f90c69830d378c3bad0ecba00c4b
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
