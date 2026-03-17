@@ -117,32 +117,88 @@
 //Paralelismo  -> paralelo.
 
 
-console.log("Início da execução do código")
-//async function funcao(){
-const funcao = async () => {
-    const prom =
-        new Promise<string>((resolve, reject) => {
-            setTimeout(function handle() {
-                reject("Executei a função")
-            }, 5000)
-        })
-    return prom
-}
-try{
-    const resultado = await funcao()
-    console.log(resultado)
-}
-catch(erro){
-    console.log("Minha mensagem de erro:"+erro)
-}
+// console.log("Início da execução do código")
+// //async function funcao(){
+// const funcao = async () => {
+//     const prom =
+//         new Promise<string>((resolve, reject) => {
+//             setTimeout(function handle() {
+//                 reject("Executei a função")
+//             }, 5000)
+//         })
+//     return prom
+// }
+// try{
+//     const resultado = await funcao()
+//     console.log(resultado)
+// }
+// catch(erro){
+//     console.log("Minha mensagem de erro:"+erro)
+// }
 
-console.log("Fim da execução do código")
+// try{ //Tente
+//     // Executar algo
+//     // Caminho feliz -> onde tudo dá certo :D
+//     //resolve()
+//     //Sem erro
+//     const resultado = await funcao()
+//     console.log(resultado)
+
+// }
+// catch(erro){//Se não der certo
+//     //Algo que der errado
+//     //reject
+//     //throw
+//     //Erros de código
+//     //Entre outros
+//     console.log("Minha mensagem de erro:"+erro)
+// }
 
 
-Math.random()>=0.5{}
 
-// Crie uma função que tenha 50% de chance de retornar "tere" após 
-// 5 segundos ou a função devolve o valor null
-// function devolveTere()
-//E faça o tratamento do erro com o try e catch.
 
+// console.log("Fim da execução do código")
+
+
+// Math.random()>=0.5{}
+
+// // Crie uma função que tenha 50% de chance de retornar "tere" após 
+// // 5 segundos ou a função devolve o valor null
+// // function devolveTere()
+// //E faça o tratamento do erro com o try e catch.
+
+
+// Funções de vetores   -> Revisão
+// FIND
+const vetor = [1,2,3,4,5,6,7]
+//Procurar-> find
+//Ele procura o que nós mandarmos. 
+//Então temos que criar uma função que retorne verdadeiro
+// para o que estamos buscando e falso para o que 
+//não estamos buscando
+
+console.log(vetor.find((num:number)=>num==3))
+// FILTER ->filtra
+const pessoas = [{id:1,nome:"Tere"},{id:2,nome:"Marcelo"}]
+console.log(pessoas.filter((p)=>p.id>=1))
+
+// MAP
+//Também vamos passar uma função para ele:
+//E ele vai aplicar a função em cada elemento do vetor
+//E criar um novo vetor transformado pela função
+console.log(vetor)
+const r = vetor.map((x)=>x)
+console.log(r)
+// SPREAD
+
+const vetor2 = vetor
+const vetor3 = [...vetor,...vetor]
+vetor2[0] = 10
+vetor3[1] = 10
+console.log(vetor3)
+
+const [posicao1,posicao2,...resto] = vetor3
+console.log(posicao1,posicao2,resto)
+
+const {id} =pessoas[0]!
+console.log(id)
