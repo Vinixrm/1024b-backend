@@ -22,6 +22,10 @@ app.post("/pessoas", async(req, res) => {
     try {
         //const preparacao = await connection.prepare("select * from pessoa");
         const {id,nome} = req.body
+        //Valide se o id e o nome foram passados corretamente. (Algum valor)
+        //Se não foram, retorne o código 400 com a mensagem "id ou nome inválidos"
+        //Não deixe o código executar a parte de baixo quando for inválido.
+        
         const [resultado, campos] =
             await connection.execute(`insert into pessoa values (?,?)`, [id, nome])
         console.log(resultado)
