@@ -10,6 +10,23 @@ app.use(express.json())
 //Crie uma rota '\cliente_data_pedido' que retorne os clientes e a data que os mesmos fizeram 
 // o pedido. Para realizar isso, utilize o comando inner join para juntar as tabelas. 
 // Utilize o banco de dados chamado  dbteremercado
+// 1️⃣ /cliente_data_pedido
+app.get('/cliente_data_pedido', async (req, res) => {
+  try {
+    const sql = `
+      SELECT c.nome, p.datapedido 
+      FROM clientes c
+      INNER JOIN pedidos p 
+      ON c.idclientes = p.clientes_idclientes
+    `;
+
+    const [result] = await connection.execute(sql);
+    res.json(result);
+  } catch (err) {
+    const mysqlErrorHandle = new MysqlErrorHandle(err, res);
+    mysqlErrorHandle.validar();
+  }
+});
 
 //SELECT nome,datapedido FROM clientes c 
 //                      INNER JOIN pedidos p ON c.idclientes=p.clientes_idclientes
@@ -17,17 +34,68 @@ app.use(express.json())
 //2 Crie uma rota chamada '\pedidos_2026' que retorne 
 // idclientes, nome, cidade, idade,idpedidos,datapedido dos pedidos feitos no ano
 // de 2026.
+// 2️⃣ /pedidos_2026
+app.get('/pedidos_2026', async (req, res) => {
+  try {
+    const sql = `
+      SELECT c.idclientes, c.nome, c.cidade, c.idade,
+             p.idpedidos, p.datapedido
+      FROM clientes c
+      INNER JOIN pedidos p 
+      ON c.idclientes = p.clientes_idclientes
+      WHERE YEAR(p.datapedido) = 2026
+    `;
+
+    const [result] = await connection.execute(sql);
+    res.json(result);
+  } catch (err) {
+    const mysqlErrorHandle = new MysqlErrorHandle(err, res);
+    mysqlErrorHandle.validar();
+  }
+});
+
 
 //3.Crie uma rota chamada '\quantidade_pedidos' que retorne 
 // um json no formato '{quantidade_pedidos:100}' com a quantidade de pedidos cadastrados
 // na tabela pedidos. USE O COMANDO COUNT(*) para contar as quantidades.
+app.get('/quantidade_pedidos', async (req, res) => {
+  try {
+    const sql = `SELECT COUNT(*) AS quantidade_pedidos FROM pedidos`;
+
+    const [result] = await connection.execute(sql) as any[];
+    res.json({
+      quantidade_pedidos: result[0].quantidade_pedidos
+    });
+  } catch (err) {
+    const mysqlErrorHandle = new MysqlErrorHandle(err, res);
+    mysqlErrorHandle.validar();
+  }
+});
+
 
 //4 Crie uma rota chamada '\quantidade_pedidos_clientes' que retorne
 // um json no formato '[{nome:"tere",quantidade_pedidos:1000}]' que retorne 
 // todos os clientes e a quantidade de pedidos que cada cliente fez
 
 
+app.get('/quantidade_pedidos_clientes', async (req, res) => { 
+    try{
+  const sql = `
+    SELECT c.nome, COUNT(p.idpedidos) AS quantidade_pedidos
+    FROM clientes c
+    LEFT JOIN pedidos p 
+    ON c.idclientes = p.clientes_idclientes
+    GROUP BY c.idclientes, c.nome
+  `;
 
+
+    const [result] = await connection.execute(sql);
+    res.json(result);
+  } catch (err) {
+    const mysqlErrorHandle = new MysqlErrorHandle(err, res);
+    mysqlErrorHandle.validar();
+  }
+});
 
 
 
